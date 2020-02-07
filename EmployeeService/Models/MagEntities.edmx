@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NewsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Magazine" Type="int" />
+          <Property Name="Article Category" Type="smallint" Nullable="false" />
+          <Property Name="Article Status" Type="smallint" Nullable="false" />
+          <Property Name="Thumbnail Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Video Name" Type="varchar" MaxLength="255" />
+          <Property Name="Content Name" Type="varchar" MaxLength="255" />
+          <Property Name="Expiry Date" Type="datetime" />
+          <Property Name="Created Date" Type="datetime" Nullable="false" />
+          <Property Name="Created By" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Modified Date" Type="datetime" />
+          <Property Name="Modified By" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Article Category">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Article Status">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Magazine">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Thumbnail Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Expiry Date" Type="datetime" />
+          <Property Name="Created By" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Created Date" Type="datetime" Nullable="false" />
+          <Property Name="Modified By" Type="varchar" MaxLength="255" />
+          <Property Name="Modified Date" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Article_Article Category">
+          <End Role="Article Category" Type="Self.Article Category" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article Category">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Article Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Article Status">
+          <End Role="Article Status" Type="Self.Article Status" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article Status">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Article Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Magazine">
+          <End Role="Magazine" Type="Self.Magazine" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Magazine">
+              <PropertyRef Name="AutoID" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Magazine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NewsModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article Category" EntityType="Self.Article Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article Status" EntityType="Self.Article Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Magazine" EntityType="Self.Magazine" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Article_Article Category" Association="Self.FK_Article_Article Category">
+            <End Role="Article Category" EntitySet="Article Category" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Article Status" Association="Self.FK_Article_Article Status">
+            <End Role="Article Status" EntitySet="Article Status" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Magazine" Association="Self.FK_Article_Magazine">
+            <End Role="Magazine" EntitySet="Magazine" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NewsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Magazine" Type="Int32" />
+          <Property Name="Article_Category" Type="Int16" Nullable="false" />
+          <Property Name="Article_Status" Type="Int16" Nullable="false" />
+          <Property Name="Thumbnail_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Video_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Content_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Expiry_Date" Type="DateTime" Precision="3" />
+          <Property Name="Created_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Created_By" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Modified_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modified_By" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Article_Category1" Relationship="Self.FK_Article_Article_Category" FromRole="Article" ToRole="Article_Category" />
+          <NavigationProperty Name="Article_Status1" Relationship="Self.FK_Article_Article_Status" FromRole="Article" ToRole="Article_Status" />
+          <NavigationProperty Name="Magazine1" Relationship="Self.FK_Article_Magazine" FromRole="Article" ToRole="Magazine" />
+        </EntityType>
+        <EntityType Name="Article_Category">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Article_Category" FromRole="Article_Category" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Article_Status">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Article_Status" FromRole="Article_Status" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Magazine">
+          <Key>
+            <PropertyRef Name="AutoID" />
+          </Key>
+          <Property Name="AutoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Thumbnail_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Expiry_Date" Type="DateTime" Precision="3" />
+          <Property Name="Created_By" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Created_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Modified_By" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Modified_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Magazine" FromRole="Magazine" ToRole="Article" />
+        </EntityType>
+        <Association Name="FK_Article_Article_Category">
+          <End Role="Article_Category" Type="Self.Article_Category" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article_Category">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Article_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Article_Status">
+          <End Role="Article_Status" Type="Self.Article_Status" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article_Status">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Article_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Magazine">
+          <End Role="Magazine" Type="Self.Magazine" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Magazine">
+              <PropertyRef Name="AutoID" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Magazine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NewsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="Article_Categories" EntityType="Self.Article_Category" />
+          <EntitySet Name="Article_Status" EntityType="Self.Article_Status" />
+          <EntitySet Name="Magazines" EntityType="Self.Magazine" />
+          <AssociationSet Name="FK_Article_Article_Category" Association="Self.FK_Article_Article_Category">
+            <End Role="Article_Category" EntitySet="Article_Categories" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Article_Status" Association="Self.FK_Article_Article_Status">
+            <End Role="Article_Status" EntitySet="Article_Status" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Magazine" Association="Self.FK_Article_Magazine">
+            <End Role="Magazine" EntitySet="Magazines" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NewsModelStoreContainer" CdmEntityContainer="NewsEntities">
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="NewsModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Magazine" ColumnName="Magazine" />
+                <ScalarProperty Name="Article_Category" ColumnName="Article Category" />
+                <ScalarProperty Name="Article_Status" ColumnName="Article Status" />
+                <ScalarProperty Name="Thumbnail_Name" ColumnName="Thumbnail Name" />
+                <ScalarProperty Name="Video_Name" ColumnName="Video Name" />
+                <ScalarProperty Name="Content_Name" ColumnName="Content Name" />
+                <ScalarProperty Name="Expiry_Date" ColumnName="Expiry Date" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created Date" />
+                <ScalarProperty Name="Created_By" ColumnName="Created By" />
+                <ScalarProperty Name="Modified_Date" ColumnName="Modified Date" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified By" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Article_Categories">
+            <EntityTypeMapping TypeName="NewsModel.Article_Category">
+              <MappingFragment StoreEntitySet="Article Category">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Article_Status">
+            <EntityTypeMapping TypeName="NewsModel.Article_Status">
+              <MappingFragment StoreEntitySet="Article Status">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Magazines">
+            <EntityTypeMapping TypeName="NewsModel.Magazine">
+              <MappingFragment StoreEntitySet="Magazine">
+                <ScalarProperty Name="AutoID" ColumnName="AutoID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Thumbnail_Name" ColumnName="Thumbnail Name" />
+                <ScalarProperty Name="Expiry_Date" ColumnName="Expiry Date" />
+                <ScalarProperty Name="Created_By" ColumnName="Created By" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created Date" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified By" />
+                <ScalarProperty Name="Modified_Date" ColumnName="Modified Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
